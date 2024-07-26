@@ -1,0 +1,254 @@
+gendered_word,gender_neutral_word
+actress,actor
+adman,advertising executive
+adwoman,advertising executive
+administratrix,administrator
+airman,aeronaut
+airwoman,aeronaut
+alderman,council member
+alderwoman,council member
+anchorman,anchor
+anchorwoman,anchor
+assemblyman,assemblyperson
+authoress,author
+aviatrix,aeronaut
+bellboy,bellhop
+boy Friday,clerk
+girl Friday,clerk
+guy Friday,clerk
+boyfriend,significant other
+girlfriend,significant other
+brotherhood,association
+sisterhood,association
+busboy,busser
+busgirl,busser
+businessman,businessperson
+businesswoman,businessperson
+cameraman,camera operator
+camerawoman,camera operator
+career girl,administrator
+career woman,administrator
+caveman,cave dweller
+cavewoman,cave dweller
+chairman,chair
+chairwoman,chair
+chambermaid,hotel cleaner
+charwoman,cleaner
+city fathers,city leaders
+cleaning lady,domestic
+clergyman,cleric
+clergywoman,cleric
+coed,student
+committeeman,committee member
+committeewoman,committee member
+common man,common person
+common woman,common person
+congressman,congressperson
+congresswoman,congressperson
+councilman,council member
+councilwoman,council member
+countryman,compatriot
+countrywoman,compatriot
+craftsman,craftsperson
+craftswoman,craftsperson
+crewman,crewperson
+crewwoman,crewperson
+deaconess,deacon
+delivery boy,delivery person
+delivery man,delivery person
+doorman,door attendant
+doorwoman,door attendant
+draftsman,draftsperson
+draftswoman,draftsperson
+drama queen,dramatizer
+enchantress,enchanter
+executrix,executor
+fatherland,homeland
+motherland,homeland
+fellowman,being
+fellowship,alliance
+female CEO,CEO
+fireman,firefighter
+firewoman,firefighter
+fisherman,angler
+fisherwoman,angler
+forefathers,ancestors
+foremothers,ancestors
+foreman,shift supervisor
+forewoman,shift supervisor
+freshman,first-year student
+freshwoman,first-year student
+frontman,front
+frontwoman,front
+gal,person
+garbage man,refuse collector
+garbage woman,refuse collector
+gentleman,person
+gentlewoman,person
+giantess,giant
+groundsman,groundskeeper
+groundswoman,groundskeeper
+guy,person
+guys,individuals
+handyman,handyperson
+handywoman,handyperson
+heiress,heir
+heroine,hero
+hitman,hitperson
+hitwoman,hitperson
+horseman,horseperson
+horsewoman,horseperson
+hostess,host
+househusband,homemaker
+housewife,homemaker
+housemaid,domestic
+human,being
+humanitarian,advocate
+huntsman,hunter
+husband,mate
+husbandman,agronomist
+insurance man,insurance agent
+insurance woman,insurance agent
+journeyman,journeyperson
+journeywoman,journeyperson
+kinsman,kin
+kinswoman,kin
+lady boss,boss
+landlord,building manager
+landlady,building manager
+lawman,law-enforcement officer
+lawwoman,law-enforcement officer
+layman,layperson
+laywoman,layperson
+letterman,champ
+letterwoman,champ
+liveryman,stable hand
+longshoreman,longshore worker
+lumberman,lumberperson
+lumberwoman,lumberperson
+madman,deranged person
+madwoman,deranged person
+maid,domestic employee
+maiden name,birth name
+maiden voyage,first voyage
+mailman,mailperson
+mailwoman,mailperson
+man hours,hours of work
+man in the street,average person
+man of letters,person of letters
+woman of letters,person of letters
+man of the world,cosmopolitan
+woman of the world,cosmopolitan
+man-at-arms,combatant
+woman-at-arms,combatant
+manhood,adulthood
+womanhood,adulthood
+manhunt,hunt
+mankind,people
+manpower,crew
+womanpower,crew
+marksman,marksperson
+markswoman,marksperson
+medicine man,magic healer
+medicine woman,magic healer
+men and women,people
+middleman,broker
+mother tongue,first language
+muscleman,bodyguard
+musclewoman,bodyguard
+newsboy,paper carrier
+newsgirl,paper carrier
+newsman,broadcaster
+newswoman,broadcaster
+newspaperman,editor
+newspaperwoman,editor
+office mom,expert organizer
+ombudsman,ombudsperson
+ombudswoman,ombudsperson
+one-upmanship,competitiveness
+outdoorsman,outdoorsperson
+outdoorswoman,outdoorsperson
+patrolman,patrolperson
+patrolwoman,patrolperson
+patroness,patron
+plainclothesman,plainclothesperson
+plainclotheswoman,plainclothesperson
+poetess,poet
+policeman,policeperson
+policewoman,policeperson
+postman,postperson
+postwoman,postperson
+pressman,columnist
+presswoman,columnist
+repairman,repairperson
+repairwoman,repairperson
+salesman,salesperson
+salesgirl,salesperson
+saleslady,salesperson
+schoolboy,schoolchild
+schoolgirl,schoolchild
+seaman,mariner
+seamstress,clothier
+self-made man,self-made person
+self-made woman,self-made person
+serviceman,serviceperson
+servicewoman,serviceperson
+shepherdess,shepherd
+spaceman,spaceperson
+spacewoman,spaceperson
+spokesman,spokesperson
+spokeswoman,spokesperson
+sportsman,sportsperson
+sportswoman,sportsperson
+stable boy,stable attendant
+statesman,statesperson
+stateswoman,statesperson
+stewardess,steward
+superhuman,exceptional
+tomboy,adventurous youngster
+tradesman,tradesperson
+tradeswoman,tradesperson
+triggerman,triggerperson
+triggerwoman,triggerperson
+waitress,waiter
+watchman,watchperson
+watchwoman,watchperson
+weatherman,weatherperson
+weatherwoman,weatherperson
+wife,mate
+working man,breadwinner
+working woman,breadwinner
+working mother,breadwinner
+workman,employee
+workwoman,employee
+workmanship,ability
+fatherly,protective
+feminine,gentle
+girlish,juvenile
+humanitarian,altruistic
+ladylike,courteous
+manlike,bold
+manly,mature
+manmade,artificial
+motherly,nurturing
+nonhuman,animalistic
+pussy-whipped,browbeaten
+schoolgirlish,childish
+sportsmanlike,ethical
+statesmanlike,dedicated
+subhuman,bestial
+undermanned,shorthanded
+unladylike,coarse
+unmanly,cowardly
+unmanned,autonomic
+unsportsmanlike,dishonest
+unwomanly,boorish
+womanly,cultured
+dehumanize,animalize
+humanize,civilize
+inhuman,coldhearted
+inhumane,brutal
+known to man,known
+man,operate
+reman,recrew
+womanize,philander
