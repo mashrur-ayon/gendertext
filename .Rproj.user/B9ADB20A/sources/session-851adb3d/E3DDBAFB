@@ -1,27 +1,27 @@
 {
-    "id": "54714D88",
-    "path": null,
-    "project_path": null,
+    "id": "E3DDBAFB",
+    "path": "~/GitHub/gendertext/R/read_file.R",
+    "project_path": "R/read_file.R",
     "type": "r_source",
     "hash": "0",
     "contents": "",
-    "dirty": true,
-    "created": 1723905984954.0,
+    "dirty": false,
+    "created": 1723906577723.0,
     "source_on_save": false,
     "relative_order": 1,
     "properties": {
         "tempName": "Untitled1",
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "9,86",
-        "scrollLine": "0"
+        "cursorPosition": "33,0",
+        "scrollLine": "12"
     },
     "folds": "",
-    "lastKnownWriteTime": 3474298832360256866,
-    "encoding": "",
+    "lastKnownWriteTime": 1723906611,
+    "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1723906267861,
+    "last_content_update": 1723906611697,
     "read_only": false,
     "read_only_alternatives": []
 }
