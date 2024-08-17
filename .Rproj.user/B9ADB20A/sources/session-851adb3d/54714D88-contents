@@ -1,0 +1,10 @@
+# Load necessary libraries
+library(tidyverse)
+
+# Load the CSV file
+combined_gender_neutral_words <- read_csv("inst/combined_gender_neutral_words.csv")
+
+# Take a look at the data to ensure it's loaded correctly
+print(combined_gender_neutral_words)
+
+save(combined_gender_neutral_words, file = "data/combined_gender_neutral_words.RData")
