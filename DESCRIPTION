@@ -1,12 +1,21 @@
 Package: gendertext
-Type: Package
-Title: What the Package Does (Title Case)
+Title: Detect and Suggest Alternatives for Gendered Language
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Authors@R: 
+    person("S M Mashrur", "Arafin Ayon", email = "mashrur399@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-3659-2891"))
+Description: Reads documents (txt, pdf, docx, etc.), detects gendered language using a built-in dictionary, 
+    reports the share of gendered vs gender-neutral terms, and suggests gender-neutral alternatives.
+License: MIT + file LICENSE
 Encoding: UTF-8
-LazyData: true
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
+Imports:
+    readtext,
+    stringr,
+    dplyr,
+    tibble
+Suggests:
+    testthat (>= 3.0.0),
+    knitr,
+    rmarkdown
+Config/testthat/edition: 3
