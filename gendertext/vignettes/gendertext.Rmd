@@ -1,0 +1,99 @@
+---
+title: "Using gendertext"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Using gendertext}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(gendertext)
+```
+
+## Introduction
+
+The **gendertext** package provides simple, transparent tools for identifying gendered language in text and suggesting gender-neutral alternatives. 
+
+It is designed for researchers, policy analysts, and practitioners who want to assess inclusive language practices in documents.
+
+The package follows a dictionary-based approach, relying on a built-in corpus of gendered terms and suggested neutral replacements.
+
+## Built-in dictionary
+
+The package ships with a small example dictionary that is used internally by all functions.
+
+```{r}
+data("gender_dictionary")
+head(gender_dictionary)
+
+```
+
+This dataset can be expanded or replaced in future versions of the package.
+
+## Analysing text directly
+
+The simplest way to use `gendertext` is to analyse a character string.
+
+```{r}
+
+gender_score(
+  text = "Ladies and gentlemen, the chairman said he will call the policeman."
+)
+
+```
+
+The reported neutral percentage is a proxy defined as tokens not matched to
+any gendered term in the dictionary.
+
+
+## Gender-neutral suggestions
+
+```{r}
+gender_suggestions(
+  text = "Our chairman said he will email the mailman."
+)
+
+```
+
+##Working with files
+
+`gendertext` can also analyse files such as `.txt`, `.pdf`, and `.docx`
+using the `readtext` package.
+
+The package includes example files for demonstration purposes.
+
+
+```{r}
+
+txt <- system.file("extdata", "test.txt", package = "gendertext")
+pdf <- system.file("extdata", "test.pdf", package = "gendertext")
+
+gender_score(path = txt)
+gender_suggestions(path = txt)
+
+gender_score(path = pdf)
+
+```
+
+Please Note: PDF analysis depends on the presence of extractable text.
+Scanned PDFs or image-only documents may not yield readable content.
+
+##Limitations
+
+- Results depend on dictionary coverage.
+
+- The package does not attempt semantic interpretation.
+
+- Gender neutrality is estimated using dictionary matching, not linguistic inference.
+
+
+# Conclusion
+
+`gendertext` offers a lightweight and reproducible way to examine gendered
+language in text. Its transparent design makes it suitable for research,
+policy review, and exploratory analysis.

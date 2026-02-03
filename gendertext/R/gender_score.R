@@ -1,99 +1,121 @@
-#' Calculate gendered language share in a text or file
+#' Gendered Language Score
 #'
-#' Computes the share of dictionary-matched gendered terms within the text.
-#' Returns both counts and percentages.
+#' Computes the share of dictionary-matched gendered terms within a text (or within a file).
+#' The function uses the package dataset \code{gender_dictionary} (gendered \eqn{\rightarrow} neutral suggestions).
 #'
-#' @param text Character. Text to analyse. Optional if `path` is provided.
-#' @param path Character. Path to a file to analyse (txt/pdf/docx/etc.). Optional if `text` is provided.
-#' @param unit Character. "tokens" (default) counts word tokens; "matches" counts total dictionary matches.
+#' The reported "neutral" share is a *proxy* defined as non-matched units when \code{unit = "tokens"}.
+#' In other words, it estimates the proportion of tokens that are not matched to any gendered term
+#' in the dictionary (not a comprehensive measure of neutrality).
 #'
-#' @return A tibble with counts and percentages.
-#' @export
+#' @param text A character string containing the text to analyse. Optional if \code{path} is provided.
+#' @param path A character string specifying a file path (\code{.txt}, \code{.pdf}, \code{.docx}, etc.).
+#'   Optional if \code{text} is provided.
+#' @param unit A character string specifying the counting unit:
+#'   \itemize{
+#'     \item \code{"tokens"} (default): counts whitespace tokens in the cleaned text and reports
+#'       matched gendered occurrences as a share of all tokens.
+#'     \item \code{"matches"}: counts total dictionary matches only (useful for quick detection).
+#'   }
+#'
+#' @return A tibble with the following columns:
+#' \describe{
+#'   \item{total_units}{Total number of units counted (tokens or matches, depending on \code{unit}).}
+#'   \item{gendered_units}{Number of gendered matches detected.}
+#'   \item{neutral_units}{For \code{unit = "tokens"}, \code{total_units - gendered_units}. Otherwise \code{NA}.}
+#'   \item{gendered_percent}{Percentage of gendered units.}
+#'   \item{neutral_percent}{Percentage of neutral proxy units (tokens not matched), or \code{NA} for \code{"matches"}.}
+#' }
 #'
 #' @examples
-#' gender_score(text = "The chairman said he will help.")
+#' # Direct text input
+#' gender_score(text = "The chairman said he will call the policeman.")
+#'
 #' \dontrun{
-#' gender_score(path = "report.docx")
+#' txt <- system.file("extdata", "test.txt", package = "gendertext")
+#' pdf <- system.file("extdata", "test.pdf", package = "gendertext")
+#' gender_score(path = txt)
+#' gender_score(path = pdf)
 #' }
-gender_score <- function(text = NULL, path = NULL, unit = c("tokens","matches")) {
+#'
+#' @export
+gender_score <- function(text = NULL, path = NULL, unit = c("tokens", "matches")) {
+
   unit <- match.arg(unit)
-  
+
   if (is.null(text) && is.null(path)) {
-    stop("Provide either `text` or `path`.")
+    stop("Provide either `text` or `path`.", call. = FALSE)
   }
-  if (!is.null(text) && !is.character(text)) {
-    stop("`text` must be character.")
+  if (!is.null(text) && (!is.character(text) || length(text) != 1L)) {
+    stop("`text` must be a single character string.", call. = FALSE)
   }
   if (!is.null(path)) {
+    if (!is.character(path) || length(path) != 1L || is.na(path)) {
+      stop("`path` must be a single, non-missing character string.", call. = FALSE)
+    }
     text <- read_text(path)
   }
-  
+
   # Load built-in dictionary from data/
   data("gender_dictionary", package = "gendertext", envir = environment())
-  
+
   # Normalise text
   txt <- tolower(text)
-  # Keep apostrophes, replace other punctuation with spaces
   txt <- stringr::str_replace_all(txt, "[^a-z\\s']", " ")
   txt <- stringr::str_squish(txt)
-  
-  if (nchar(txt) == 0) {
+
+  if (nchar(txt) == 0L) {
     return(tibble::tibble(
-      total_units = 0,
-      gendered_units = 0,
-      neutral_units = 0,
+      total_units = 0L,
+      gendered_units = 0L,
+      neutral_units = 0L,
       gendered_percent = NA_real_,
       neutral_percent = NA_real_
     ))
   }
-  
-  # Tokenise (simple whitespace tokenisation)
+
   tokens <- unlist(strsplit(txt, "\\s+"), use.names = FALSE)
-  
-  # Match logic:
-  # - single-word dictionary entries: token match
-  # - multi-word dictionary entries: phrase match in the full string
+
   dict <- gender_dictionary
-  
   single <- dict[!stringr::str_detect(dict$gendered, "\\s+"), , drop = FALSE]
   multi  <- dict[ stringr::str_detect(dict$gendered, "\\s+"), , drop = FALSE]
-  
-  # Single-word matches: count tokens that equal any gendered word
+
+  # Single-word matches
   gendered_token_hits <- sum(tokens %in% single$gendered)
-  
-  # Multi-word matches: count occurrences using fixed boundary-ish matching
-  multi_hits <- 0
-  if (nrow(multi) > 0) {
+
+  # Multi-word phrase matches
+  multi_hits <- 0L
+  if (nrow(multi) > 0L) {
     for (g in multi$gendered) {
-      # Match phrase with word boundaries around it
       pattern <- paste0("\\b", stringr::str_replace_all(g, "\\s+", "\\\\s+"), "\\b")
       multi_hits <- multi_hits + stringr::str_count(txt, pattern)
     }
   }
-  
-  total_gendered_matches <- gendered_token_hits + multi_hits
-  
+
+  total_gendered_matches <- as.integer(gendered_token_hits + multi_hits)
+
   if (unit == "tokens") {
+
     total_units <- length(tokens)
     gendered_units <- total_gendered_matches
-    neutral_units <- max(total_units - gendered_units, 0)
-    
+    neutral_units <- max(total_units - gendered_units, 0L)
+
     tibble::tibble(
-      total_units = total_units,
-      gendered_units = gendered_units,
-      neutral_units = neutral_units,
+      total_units = as.integer(total_units),
+      gendered_units = as.integer(gendered_units),
+      neutral_units = as.integer(neutral_units),
       gendered_percent = (gendered_units / total_units) * 100,
       neutral_percent = (neutral_units / total_units) * 100
     )
+
   } else {
-    # "matches": neutral is defined as non-matched tokens + (optional) not super meaningful,
-    # but we keep a consistent shape.
+
     total_units <- total_gendered_matches
+
     tibble::tibble(
-      total_units = total_units,
-      gendered_units = total_gendered_matches,
+      total_units = as.integer(total_units),
+      gendered_units = as.integer(total_gendered_matches),
       neutral_units = NA_integer_,
-      gendered_percent = ifelse(total_units == 0, 0, 100),
+      gendered_percent = ifelse(total_units == 0L, 0, 100),
       neutral_percent = NA_real_
     )
   }
