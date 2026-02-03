@@ -2,10 +2,6 @@
 
 **gendertext** is an R package that detects gendered language in text (including documents like `.txt`, `.pdf`, and `.docx`) and suggests gender-neutral alternatives.
 
-# Overview: <img src="https://github.com/mashrur-ayon/genderstat/blob/main/plots-pictures/genderstat-logo.png" align="right" height="200">
-The `gendertext` R package is a useful tool for qualitative analysis in gender studies. Developed by S M Mashrur Arafin Ayon, this package (version 0.1.0) is intended for researchers, students, and professionals doing qualitative analysis in social sciences.
-
-
 ## Features
 
 1. **Gendered language share**  
