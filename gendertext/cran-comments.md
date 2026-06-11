@@ -4,22 +4,24 @@
 
 This is the first submission of gendertext to CRAN.
 
-The package detects gendered words and phrases in text, reports the share
-of gendered language, suggests gender neutral alternatives, and can
-rewrite text in gender neutral form. The core of the package uses base R
-only. The 'readtext' package is an optional suggestion used to read
-document formats such as PDF and Word; all functionality on plain text
-works without it.
+The package detects gendered words and phrases in text, reports the
+share of gendered language, suggests gender neutral alternatives, and
+can rewrite text in gender neutral form. The core uses base R only;
+the 'readtext' package is an optional suggestion used for reading PDF
+and Word documents.
 
 ## R CMD check results
 
-0 errors | 0 warnings | 0 notes
+0 errors | 0 warnings
 
-(Expected note on first submission: "New submission".)
+One NOTE on the local Windows machine ("checking for future file
+timestamps: unable to verify current time"), which comes from the
+clock verification web service being unreachable and is unrelated to
+the package.
 
 ## Test environments
 
-* Local R installation
+* Local R installation (Windows)
 * GitHub Actions (ubuntu-latest, windows-latest, macos-latest)
 
 ## Downstream dependencies
