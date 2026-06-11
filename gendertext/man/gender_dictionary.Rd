@@ -12,7 +12,7 @@ A data frame with 208 rows and 2 variables:
 }
 }
 \source{
-Curated by the package author, informed by the United Nations
+Curated by the package authors, informed by the United Nations
 guidelines for gender inclusive language
 (\url{https://www.un.org/en/gender-inclusive-language/}) and the European
 Parliament guidance on gender neutral language

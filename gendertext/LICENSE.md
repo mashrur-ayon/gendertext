@@ -1,6 +1,6 @@
 # MIT License
 
-Copyright (c) 2026 Mashrur Arafin Ayon
+Copyright (c) 2026 S M Mashrur Arafin Ayon
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

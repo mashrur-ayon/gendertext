@@ -22,7 +22,7 @@
 #'   \item{neutral}{Character. The suggested gender neutral alternative.}
 #' }
 #'
-#' @source Curated by the package author, informed by the United Nations
+#' @source Curated by the package authors, informed by the United Nations
 #'   guidelines for gender inclusive language
 #'   (<https://www.un.org/en/gender-inclusive-language/>) and the European
 #'   Parliament guidance on gender neutral language

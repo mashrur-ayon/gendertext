@@ -1,10 +1,13 @@
 Package: gendertext
 Title: Detect Gendered Words in Text and Suggest Neutral Alternatives
 Version: 0.1.0
-Authors@R:
-    person("Mashrur", "Arafin Ayon", email = "mashrur399@gmail.com",
+Authors@R: c(
+    person("S M Mashrur", "Arafin Ayon", email = "mashrur399@gmail.com",
            role = c("aut", "cre", "cph"),
-           comment = c(ORCID = "0000-0002-3659-2891"))
+           comment = c(ORCID = "0000-0002-3659-2891")),
+    person("Rodaba", "Zaman Adrita", email = "Zamanrodaba@gmail.com",
+           role = c("aut", "dtc"),
+           comment = "Word collection and gender dictionary curation"))
 Description: Identifies gendered words and phrases in text using a built in
     dictionary of more than two hundred gendered terms paired with gender
     neutral alternatives. Reports the share of gendered language in a text,

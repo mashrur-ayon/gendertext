@@ -44,6 +44,11 @@ gender_replace(text = "The Chairman called the policeman.")
   generates the package dataset.
 * [`plots-picture/`](plots-picture/): logo and images.
 
+## Authors
+
+* **S M Mashrur Arafin Ayon** (maintainer) [ORCID 0000-0002-3659-2891](https://orcid.org/0000-0002-3659-2891)
+* **Rodaba Zaman Adrita**: word collection and gender dictionary curation
+
 ## License
 
-MIT. Copyright (c) 2026 Mashrur Arafin Ayon.
+MIT. Copyright (c) 2026 S M Mashrur Arafin Ayon.

@@ -76,6 +76,11 @@ suggested neutral replacements. Matching is case insensitive, tolerant of
 possessive forms, and counts multi word phrases before single words so
 nothing is double counted.
 
+## Authors
+
+* **S M Mashrur Arafin Ayon** (maintainer) [ORCID 0000-0002-3659-2891](https://orcid.org/0000-0002-3659-2891)
+* **Rodaba Zaman Adrita**: word collection and gender dictionary curation
+
 ## License
 
 MIT. See the `LICENSE` file.

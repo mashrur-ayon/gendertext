@@ -30,6 +30,11 @@ Useful links:
 }
 }
 \author{
-\strong{Maintainer}: Mashrur Arafin Ayon \email{mashrur399@gmail.com} (\href{https://orcid.org/0000-0002-3659-2891}{ORCID}) [copyright holder]
+\strong{Maintainer}: S M Mashrur Arafin Ayon \email{mashrur399@gmail.com} (\href{https://orcid.org/0000-0002-3659-2891}{ORCID}) [copyright holder]
+
+Authors:
+\itemize{
+  \item Rodaba Zaman Adrita \email{Zamanrodaba@gmail.com} (Word collection and gender dictionary curation) [data contributor]
+}
 }
 \keyword{internal}
