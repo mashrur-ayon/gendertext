@@ -1,50 +1,81 @@
-# gendertext
+# gendertext <img src="https://raw.githubusercontent.com/mashrur-ayon/gendertext/main/plots-picture/gender-text-logo.png" align="right" height="120" alt="gendertext logo" />
 
-**gendertext** is an R package that detects gendered language in text (including documents like `.txt`, `.pdf`, and `.docx`) and suggests gender-neutral alternatives.
+**gendertext** is an R package that detects gendered language in text and
+documents (`.txt`, `.pdf`, `.docx`, and more), measures how much of a text
+is gendered, suggests gender neutral alternatives, and can rewrite text in
+gender neutral form.
+
+The package is dictionary based and fully transparent: every result can be
+traced back to an entry in the built in dictionary of 208 curated gendered
+terms, informed by the [United Nations guidelines for gender inclusive
+language](https://www.un.org/en/gender-inclusive-language/) and the
+[European Parliament guidance on gender neutral
+language](https://www.europarl.europa.eu/cmsdata/151780/GNL_Guidelines_EN.pdf).
 
 ## Features
 
-1. **Gendered language share**  
-   Reads text (or a file) and estimates:
-   - how many dictionary-based gendered terms appear
-   - what percentage of the text is gendered vs not matched (proxy for neutral)
+1. **Gendered language share**: `gender_score()` reads text or a file and
+   reports the number and percentage of gendered versus unmatched (proxy
+   neutral) tokens.
+2. **Suggestions table**: `gender_suggestions()` lists every gendered term
+   found, its suggested neutral replacement, and how often it occurs.
+3. **Automatic rewriting**: `gender_replace()` substitutes gendered terms
+   with neutral alternatives while preserving capitalisation.
+4. **Document support**: `read_text()` reads plain text with base R and
+   formats such as PDF and Word through the optional
+   [readtext](https://cran.r-project.org/package=readtext) package.
+5. **Custom dictionaries**: every function accepts your own dictionary via
+   the `dictionary` argument.
 
-2. **Suggestions table**  
-   Returns a table of gendered terms found in the text and proposed neutral replacements.
-
-3. **Built-in dictionary**  
-   The package ships with a small built-in dictionary (`gender_dictionary`) of gendered terms and suggested alternatives.
-
-> You can replace the built-in dictionary later with your own expanded corpus.
-
-## Installation (development)
+## Installation
 
 ```r
+# From CRAN (once accepted)
+install.packages("gendertext")
+
+# Development version from GitHub
 # install.packages("devtools")
-devtools::install_github("YOUR_GITHUB_USERNAME/gendertext")
-
+devtools::install_github("mashrur-ayon/gendertext", subdir = "gendertext")
 ```
-
-## What the package does
-
-1. **Calculate gendered vs. neutral language percentages**: `gendered_ratio()`
-   reads a text, PDF, or Word document and reports the percentage of gendered
-   and gender-neutral terms.
-2. **List gendered words with neutral alternatives**: `word_table()` extracts
-   gendered words from a document and returns a table of suggested neutral
-   replacements.
-3. **Built-in corpus**: The package ships with an `RData` dataset named
-   `combined_gender_neutral_words`, containing 50–100 gendered terms and their
-   recommended neutral alternatives.
 
 ## Usage
 
 ```r
 library(gendertext)
 
-# Calculate ratios
-gendered_ratio("path/to/document.txt")
+# Share of gendered language
+gender_score(text = "The chairman said he will call the policeman.")
+#>   total_units gendered_units neutral_units gendered_percent neutral_percent
+#> 1           8              3             5             37.5            62.5
 
-# List gendered terms with suggestions
-word_table("path/to/document.txt")
+# Gendered terms with neutral alternatives
+gender_suggestions(text = "Our chairman said he will email the mailman.")
+#>   gendered suggested_neutral count
+#> 1 chairman             chair     1
+#> 2       he              they     1
+#> 3  mailman      mail carrier     1
+
+# Rewrite the text
+gender_replace(text = "The Chairman called the policeman.")
+#> [1] "The Chair called the police officer."
+
+# Analyse documents
+gender_score(path = "report.pdf")
+gender_suggestions(path = "minutes.docx")
 ```
+
+## The dictionary
+
+```r
+data(gender_dictionary)
+head(gender_dictionary)
+```
+
+The dictionary contains 208 lower case gendered terms and phrases with
+suggested neutral replacements. Matching is case insensitive, tolerant of
+possessive forms, and counts multi word phrases before single words so
+nothing is double counted.
+
+## License
+
+MIT. See the `LICENSE` file.

@@ -7,21 +7,29 @@
 read_text(path)
 }
 \arguments{
-\item{path}{A character string specifying the path to a file. The file must exist.}
+\item{path}{A character string giving the path to a file. The file must
+exist.}
 }
 \value{
-A length-1 character string containing the extracted text.
+A length one character string containing the extracted text.
 }
 \description{
-Reads text content from common document formats (e.g., \code{.txt}, \code{.pdf}, \code{.docx})
-using \pkg{readtext}. This function is intended to provide a single, normalised character string
-for downstream analysis in \code{\link{gender_score}} and \code{\link{gender_suggestions}}.
+Reads text content from a document and returns it as a single character
+string for downstream analysis in \code{\link[=gender_score]{gender_score()}}, \code{\link[=gender_suggestions]{gender_suggestions()}},
+and \code{\link[=gender_replace]{gender_replace()}}. Plain text files (extensions txt, text, md, and
+rmd) are read with base R. Other formats such as pdf, docx, rtf, odt,
+csv, and json are read with the suggested 'readtext' package when it is
+installed.
 }
 \examples{
-\dontrun{
 txt <- system.file("extdata", "test.txt", package = "gendertext")
-pdf <- system.file("extdata", "test.pdf", package = "gendertext")
-read_text(txt)
-read_text(pdf)
+substr(read_text(txt), 1, 60)
+
+if (requireNamespace("readtext", quietly = TRUE)) {
+  pdf <- system.file("extdata", "test.pdf", package = "gendertext")
+  substr(read_text(pdf), 1, 60)
 }
+}
+\seealso{
+\code{\link[=gender_score]{gender_score()}}, \code{\link[=gender_suggestions]{gender_suggestions()}}, \code{\link[=gender_replace]{gender_replace()}}
 }

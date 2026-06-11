@@ -2,38 +2,62 @@
 % Please edit documentation in R/gender_suggestions.R
 \name{gender_suggestions}
 \alias{gender_suggestions}
-\title{Gender-Neutral Suggestions for Detected Gendered Terms}
+\title{Gender Neutral Suggestions for Detected Gendered Terms}
 \usage{
-gender_suggestions(text = NULL, path = NULL, include_counts = TRUE)
+gender_suggestions(
+  text = NULL,
+  path = NULL,
+  include_counts = TRUE,
+  dictionary = NULL
+)
 }
 \arguments{
-\item{text}{A character string containing the text to analyse. Optional if \code{path} is provided.}
+\item{text}{A character string containing the text to analyse. Optional
+if \code{path} is provided.}
 
-\item{path}{A character string specifying a file path (\code{.txt}, \code{.pdf}, \code{.docx}, etc.).
-Optional if \code{text} is provided.}
+\item{path}{A character string giving a file path (txt, pdf, docx, and
+other formats supported by \code{\link[=read_text]{read_text()}}). Optional if \code{text} is
+provided.}
 
-\item{include_counts}{Logical; if \code{TRUE} (default), includes the number of occurrences found
-for each detected gendered term.}
+\item{include_counts}{Logical; if \code{TRUE} (default), the result
+includes the number of occurrences found for each detected term.}
+
+\item{dictionary}{Optional data frame with character columns
+\code{gendered} and \code{neutral} to use instead of the built in
+\link{gender_dictionary}.}
 }
 \value{
-A tibble with:
+A data frame with one row per detected term, sorted by
+decreasing count and then alphabetically:
 \describe{
-\item{gendered}{Detected gendered term/phrase from the dictionary.}
-\item{suggested_neutral}{Suggested gender-neutral replacement.}
-\item{count}{Number of occurrences in the text (if \code{include_counts = TRUE}).}
+\item{gendered}{Detected gendered term or phrase from the dictionary.}
+\item{suggested_neutral}{Suggested gender neutral replacement.}
+\item{count}{Number of occurrences in the text (only when
+\code{include_counts = TRUE}).}
 }
 }
 \description{
-Identifies gendered terms/phrases found in text (or in a file) using the package dataset
-\code{gender_dictionary}, and returns suggested gender-neutral alternatives. Optionally includes
-counts of occurrences.
+Identifies the gendered terms and phrases that occur in a text or in a
+file, using the built in dictionary \link{gender_dictionary} or a user
+supplied dictionary, and returns the suggested gender neutral
+alternative for each detected term, optionally with occurrence counts.
 }
 \examples{
 gender_suggestions(text = "Our chairman said he will email the mailman.")
 
-\dontrun{
-txt <- system.file("extdata", "test.txt", package = "gendertext")
-gender_suggestions(path = txt)
-}
+# Without counts
+gender_suggestions(
+  text = "The fireman and the policeman arrived.",
+  include_counts = FALSE
+)
 
+# Analyse a file shipped with the package
+txt <- system.file("extdata", "test.txt", package = "gendertext")
+head(gender_suggestions(path = txt))
+
+}
+\seealso{
+\code{\link[=gender_score]{gender_score()}} for an overall share, \code{\link[=gender_replace]{gender_replace()}} to
+apply the suggestions, and \link{gender_dictionary} for the built in
+dictionary.
 }

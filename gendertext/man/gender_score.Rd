@@ -4,49 +4,82 @@
 \alias{gender_score}
 \title{Gendered Language Score}
 \usage{
-gender_score(text = NULL, path = NULL, unit = c("tokens", "matches"))
+gender_score(
+  text = NULL,
+  path = NULL,
+  unit = c("tokens", "matches"),
+  dictionary = NULL
+)
 }
 \arguments{
-\item{text}{A character string containing the text to analyse. Optional if \code{path} is provided.}
+\item{text}{A character string containing the text to analyse. Optional
+if \code{path} is provided.}
 
-\item{path}{A character string specifying a file path (\code{.txt}, \code{.pdf}, \code{.docx}, etc.).
-Optional if \code{text} is provided.}
+\item{path}{A character string giving a file path (txt, pdf, docx, and
+other formats supported by \code{\link[=read_text]{read_text()}}). Optional if \code{text} is
+provided.}
 
-\item{unit}{A character string specifying the counting unit:
+\item{unit}{A character string giving the counting unit:
 \itemize{
-\item \code{"tokens"} (default): counts whitespace tokens in the cleaned text and reports
-matched gendered occurrences as a share of all tokens.
-\item \code{"matches"}: counts total dictionary matches only (useful for quick detection).
+\item \code{"tokens"} (default): reports gendered tokens as a share
+of all tokens in the cleaned text.
+\item \code{"matches"}: reports the total number of dictionary
+matches only (useful for quick detection).
 }}
+
+\item{dictionary}{Optional data frame with character columns
+\code{gendered} and \code{neutral} to use instead of the built in
+\link{gender_dictionary}.}
 }
 \value{
-A tibble with the following columns:
+A data frame with one row and the following columns:
 \describe{
-\item{total_units}{Total number of units counted (tokens or matches, depending on \code{unit}).}
-\item{gendered_units}{Number of gendered matches detected.}
-\item{neutral_units}{For \code{unit = "tokens"}, \code{total_units - gendered_units}. Otherwise \code{NA}.}
+\item{total_units}{Total number of units counted (tokens or matches,
+depending on \code{unit}).}
+\item{gendered_units}{Number of gendered units detected.}
+\item{neutral_units}{For \code{unit = "tokens"}, the difference
+\code{total_units - gendered_units}. Otherwise \code{NA}.}
 \item{gendered_percent}{Percentage of gendered units.}
-\item{neutral_percent}{Percentage of neutral proxy units (tokens not matched), or \code{NA} for \code{"matches"}.}
+\item{neutral_percent}{Percentage of unmatched (proxy neutral) units,
+or \code{NA} for \code{unit = "matches"}.}
 }
 }
 \description{
-Computes the share of dictionary-matched gendered terms within a text (or within a file).
-The function uses the package dataset \code{gender_dictionary} (gendered \eqn{\rightarrow} neutral suggestions).
+Computes the share of gendered language in a text or in a file, based on
+the built in dictionary \link{gender_dictionary} or on a user supplied
+dictionary. Multi word phrases are matched before single words and each
+piece of text is counted at most once, so a phrase such as
+"ladies and gentlemen" is never counted again as "ladies" plus
+"gentlemen".
 }
 \details{
-The reported "neutral" share is a \emph{proxy} defined as non-matched units when \code{unit = "tokens"}.
-In other words, it estimates the proportion of tokens that are not matched to any gendered term
-in the dictionary (not a comprehensive measure of neutrality).
+The reported neutral share is a proxy. It is the proportion of tokens
+that are not matched by any dictionary entry, not a comprehensive
+linguistic measure of neutrality. When \code{unit = "tokens"}, a matched
+multi word phrase contributes one gendered unit for every word it spans,
+so the gendered and neutral percentages always sum to 100.
 }
 \examples{
 # Direct text input
 gender_score(text = "The chairman said he will call the policeman.")
 
-\dontrun{
-txt <- system.file("extdata", "test.txt", package = "gendertext")
-pdf <- system.file("extdata", "test.pdf", package = "gendertext")
-gender_score(path = txt)
-gender_score(path = pdf)
-}
+# Count matches only
+gender_score(text = "The chairman spoke.", unit = "matches")
 
+# Analyse a file shipped with the package
+txt <- system.file("extdata", "test.txt", package = "gendertext")
+gender_score(path = txt)
+
+# Use a custom dictionary
+my_dict <- data.frame(
+  gendered = c("dude"),
+  neutral = c("person")
+)
+gender_score(text = "Hey dude!", dictionary = my_dict)
+
+}
+\seealso{
+\code{\link[=gender_suggestions]{gender_suggestions()}} to list the terms behind the score,
+\code{\link[=gender_replace]{gender_replace()}} to rewrite the text, and \link{gender_dictionary} for
+the built in dictionary.
 }

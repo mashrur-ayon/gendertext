@@ -1,2 +1,10 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^\.Rhistory$
+^\.RData$
+^LICENSE\.md$
+^README\.md$
+^cran-comments\.md$
+^data-raw$
+^\.github$
+^\.gitignore$

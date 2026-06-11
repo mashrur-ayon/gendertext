@@ -7,7 +7,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -17,83 +17,136 @@ library(gendertext)
 
 ## Introduction
 
-The **gendertext** package provides simple, transparent tools for identifying gendered language in text and suggesting gender-neutral alternatives. 
+The **gendertext** package provides simple, transparent tools for
+identifying gendered language in text and suggesting gender neutral
+alternatives. It is designed for researchers, policy analysts, editors,
+and practitioners who want to assess and improve inclusive language in
+documents.
 
-It is designed for researchers, policy analysts, and practitioners who want to assess inclusive language practices in documents.
+The package follows a dictionary based approach. All results come from a
+built in corpus of gendered terms paired with suggested neutral
+replacements, so every match can be traced back to a specific dictionary
+entry.
 
-The package follows a dictionary-based approach, relying on a built-in corpus of gendered terms and suggested neutral replacements.
+## The built in dictionary
 
-## Built-in dictionary
-
-The package ships with a small example dictionary that is used internally by all functions.
+The package ships with `gender_dictionary`, a curated dictionary of 208
+gendered words and phrases. It covers occupational titles, pronouns,
+forms of address, family terms, and common idioms, informed by the United
+Nations guidelines for gender inclusive language and the European
+Parliament guidance on gender neutral language.
 
 ```{r}
-data("gender_dictionary")
-head(gender_dictionary)
-
+data(gender_dictionary)
+head(gender_dictionary, 10)
+nrow(gender_dictionary)
 ```
 
-This dataset can be expanded or replaced in future versions of the package.
+## Scoring a text
 
-## Analysing text directly
-
-The simplest way to use `gendertext` is to analyse a character string.
+The simplest way to use gendertext is to score a character string. The
+result reports how many tokens the text contains, how many of them are
+gendered according to the dictionary, and the corresponding percentages.
 
 ```{r}
-
 gender_score(
   text = "Ladies and gentlemen, the chairman said he will call the policeman."
 )
-
 ```
 
-The reported neutral percentage is a proxy defined as tokens not matched to
-any gendered term in the dictionary.
+The reported neutral percentage is a proxy: it is the share of tokens not
+matched by any dictionary entry. Multi word phrases are matched before
+single words and each piece of text is counted at most once, so the
+phrase "ladies and gentlemen" is counted as one match spanning three
+tokens, never as "ladies" plus "gentlemen" on top of the phrase.
 
+If you only need the number of dictionary matches, use
+`unit = "matches"`:
 
-## Gender-neutral suggestions
+```{r}
+gender_score(
+  text = "The chairman and the spokesman left.",
+  unit = "matches"
+)
+```
+
+## Listing suggestions
+
+`gender_suggestions()` returns the gendered terms found in a text
+together with the suggested neutral replacement for each one.
 
 ```{r}
 gender_suggestions(
-  text = "Our chairman said he will email the mailman."
+  text = "Our chairman said he will email the mailman and the stewardess."
 )
-
 ```
 
-##Working with files
+## Rewriting a text
 
-`gendertext` can also analyse files such as `.txt`, `.pdf`, and `.docx`
-using the `readtext` package.
-
-The package includes example files for demonstration purposes.
-
+`gender_replace()` applies the dictionary to the original text and
+returns a rewritten version. Capitalisation follows the matched text.
 
 ```{r}
-
-txt <- system.file("extdata", "test.txt", package = "gendertext")
-pdf <- system.file("extdata", "test.pdf", package = "gendertext")
-
-gender_score(path = txt)
-gender_suggestions(path = txt)
-
-gender_score(path = pdf)
-
+gender_replace(
+  text = "The Chairman called the policeman and the FIREMAN."
+)
 ```
 
-Please Note: PDF analysis depends on the presence of extractable text.
-Scanned PDFs or image-only documents may not yield readable content.
+Replacement is plain substitution: the function does not adjust the
+surrounding grammar, so a replacement such as "they" for "he" may need a
+manual touch afterwards. Treat the output as a draft.
 
-##Limitations
+## Using your own dictionary
 
-- Results depend on dictionary coverage.
+Every function accepts a custom dictionary through the `dictionary`
+argument: a data frame with character columns `gendered` and `neutral`.
+This makes it easy to extend, restrict, or fully replace the built in
+corpus.
 
-- The package does not attempt semantic interpretation.
+```{r}
+my_dict <- data.frame(
+  gendered = c("dude", "bro"),
+  neutral = c("person", "friend")
+)
+gender_suggestions(text = "Hey dude, thanks bro!", dictionary = my_dict)
+```
 
-- Gender neutrality is estimated using dictionary matching, not linguistic inference.
+## Working with files
 
+The functions also accept a `path` argument. Plain text files are read
+with base R, so no additional packages are required.
 
-# Conclusion
+```{r}
+txt <- system.file("extdata", "test.txt", package = "gendertext")
+gender_score(path = txt)
+head(gender_suggestions(path = txt))
+```
 
-`gendertext` offers a lightweight and reproducible way to examine gendered
-language in text. Its transparent design makes it suitable for research,
-policy review, and exploratory analysis.
+Other document formats, such as PDF and Word, are supported through the
+optional readtext package. Install it with
+`install.packages("readtext")`.
+
+```{r, eval = requireNamespace("readtext", quietly = TRUE)}
+pdf <- system.file("extdata", "test.pdf", package = "gendertext")
+gender_score(path = pdf)
+```
+
+Please note: PDF analysis depends on the presence of extractable text.
+Scanned or image only documents may not yield readable content.
+
+## Limitations
+
+* Results depend on dictionary coverage; terms missing from the
+  dictionary are not detected.
+* The package does not attempt semantic interpretation. Words such as
+  "her" are flagged even when they refer to a specific person whose
+  pronouns are known and correct.
+* Gender neutrality is estimated through dictionary matching, not
+  linguistic inference, and the neutral share is a proxy measure.
+
+## Conclusion
+
+gendertext offers a lightweight and reproducible way to examine gendered
+language in text. Its transparent, dictionary based design makes it
+suitable for research, policy review, editorial work, and exploratory
+analysis.

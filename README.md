@@ -1,54 +1,49 @@
-# gendertext
+# gendertext <img src="plots-picture/gender-text-logo.png" align="right" height="120" alt="gendertext logo" />
 
-**gendertext** is an R package that detects gendered language in text (including documents like `.txt`, `.pdf`, and `.docx`) and suggests gender-neutral alternatives.
+**gendertext** is an R package that detects gendered language in text and
+documents (`.txt`, `.pdf`, `.docx`, and more), measures how much of a text
+is gendered, suggests gender neutral alternatives, and can rewrite text in
+gender neutral form.
 
-# Overview: <img src="https://github.com/mashrur-ayon/gendertext/blob/main/plots-picture/gender-text-logo.png" align="right" height="200">
-The `gendertext` R package is a useful tool for qualitative analysis in gender studies. Developed by S M Mashrur Arafin Ayon, this package (version 0.1.0) is intended for researchers, students, and professionals doing qualitative analysis in social sciences.
+The R package itself lives in the [`gendertext/`](gendertext/) subfolder
+of this repository. See its [README](gendertext/README.md) for full
+documentation.
 
-
-## Features
-
-1. **Gendered language share**  
-   Reads text (or a file) and estimates:
-   - how many dictionary-based gendered terms appear
-   - what percentage of the text is gendered vs not matched (proxy for neutral)
-
-2. **Suggestions table**  
-   Returns a table of gendered terms found in the text and proposed neutral replacements.
-
-3. **Built-in dictionary**  
-   The package ships with a small built-in dictionary (`gender_dictionary`) of gendered terms and suggested alternatives.
-
-> You can replace the built-in dictionary later with your own expanded corpus.
-
-## Installation (development)
+## Quick start
 
 ```r
 # install.packages("devtools")
-devtools::install_github("YOUR_GITHUB_USERNAME/gendertext")
+devtools::install_github("mashrur-ayon/gendertext", subdir = "gendertext")
 
+library(gendertext)
+
+gender_score(text = "The chairman said he will call the policeman.")
+gender_suggestions(text = "Our chairman said he will email the mailman.")
+gender_replace(text = "The Chairman called the policeman.")
 ```
 
 ## What the package does
 
-1. **Calculate gendered vs. neutral language percentages**: `gendered_ratio()`
-   reads a text, PDF, or Word document and reports the percentage of gendered
-   and gender-neutral terms.
-2. **List gendered words with neutral alternatives**: `word_table()` extracts
-   gendered words from a document and returns a table of suggested neutral
-   replacements.
-3. **Built-in corpus**: The package ships with an `RData` dataset named
-   `combined_gender_neutral_words`, containing 50–100 gendered terms and their
-   recommended neutral alternatives.
+1. **Calculate gendered versus neutral language percentages**:
+   `gender_score()` reads text, PDF, or Word documents and reports the
+   share of gendered and unmatched (proxy neutral) tokens.
+2. **List gendered words with neutral alternatives**:
+   `gender_suggestions()` extracts gendered words from a document and
+   returns a table of suggested neutral replacements with counts.
+3. **Rewrite text**: `gender_replace()` substitutes gendered terms with
+   neutral alternatives while preserving capitalisation.
+4. **Built in corpus**: the package ships with `gender_dictionary`, a
+   dataset of 208 curated gendered terms and phrases with recommended
+   neutral alternatives, informed by United Nations and European
+   Parliament guidance on inclusive language.
 
-## Usage
+## Repository layout
 
-```r
-library(gendertext)
+* [`gendertext/`](gendertext/): the R package (submit this folder to CRAN).
+* [`data-raw/`](data-raw/): the raw dictionary CSV and the script that
+  generates the package dataset.
+* [`plots-picture/`](plots-picture/): logo and images.
 
-# Calculate ratios
-gendered_ratio("path/to/document.txt")
+## License
 
-# List gendered terms with suggestions
-word_table("path/to/document.txt")
-```
+MIT. Copyright (c) 2026 Mashrur Arafin Ayon.
